@@ -39,7 +39,7 @@
 #else   
 #define LOCK pthread_mutex_lock(&g_mutex); 
 #define UNLOCK  pthread_mutex_unlock(&g_mutex);
-#define INITLOCK pthread_mutex_init(&g_mutex); 
+#define INITLOCK pthread_mutex_init(&g_mutex,NULL); 
 #define DESTROYLOCK pthread_mutex_destroy(&g_mutex); 
 #endif
     
@@ -453,8 +453,10 @@ void main()
     /*sort single thread*/
     //sortwords(word_list);
     
+    INITLOCK;
     /*sort multi thread and merge*/
     sortwords_multi(word_list);
+    DESTROYLOCK;
 
     /*write....file*/
     int ret = -1;
